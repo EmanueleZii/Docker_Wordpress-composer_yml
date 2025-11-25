@@ -10,4 +10,4 @@
 ## Apri WordPress / phpMyAdmin
 - WordPress → http://localhost:8080
 - phpMyAdmin → http://localhost:8081
-- nextcloud → http://localhost:8080
+- Nextcloud → http://localhost:8080
