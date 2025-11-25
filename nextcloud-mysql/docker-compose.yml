@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  db:
+    image: mariadb:10.6
+    container_name: nextcloud_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: superpassword
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: passwordfortedb
+    volumes:
+      - /mnt/dati/mysql:/var/lib/mysql  # Cartella sul tuo host per il DB
+
+  redis:
+    image: redis:7
+    container_name: nextcloud_redis
+    restart: always
+
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud_app
+    ports:
+      - 8080:80
+    restart: always
+    environment:
+      REDIS_HOST: redis
+      MYSQL_PASSWORD: passwordfortedb
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_HOST: db
+    volumes:
+      - /mnt/dati/nextcloud:/var/www/html  # Cartella sul tuo host per i dati
+    depends_on:
+      - db
+      - redis
